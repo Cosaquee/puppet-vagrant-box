@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "slave1"]
     end
+
+    slave1.vm.provision :shell, path: "scripts/bootstrap.sh"
   end
 
   config.vm.define "slave2" do |slave2|
@@ -20,6 +22,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", 512]
       v.customize ["modifyvm", :id, "--name", "slave2"]
     end
+
+    slave2.vm.provision :shell, inline: "echo \"Hello, Im inline script provisioner\""
   end
 
   config.vm.synced_folder ".", "/vagrant"
