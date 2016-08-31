@@ -23,7 +23,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--name", "slave2"]
     end
 
-    slave2.vm.provision :shell, inline: "echo \"Hello, Im inline script provisioner\""
+    slave2.vm.provision :shell, inline: "wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb && apt update && apt install puppet-agent"
+    slave2.vm.provision :shell, inline: "/opt/puppetlabs/bin/puppet apply --modulepath=/vagrant/modules /vagrant/manifests/default.pp"
   end
 
   config.vm.synced_folder ".", "/vagrant"
