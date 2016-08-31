@@ -1,3 +1,3 @@
-package { 'emacs':
+package { 'apache':
   ensure => installed,
 }

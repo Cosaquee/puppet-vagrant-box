@@ -24,7 +24,10 @@ Vagrant.configure("2") do |config|
     end
 
     slave2.vm.provision :shell, inline: "wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb && apt update && apt install puppet-agent"
-    slave2.vm.provision :shell, inline: "/opt/puppetlabs/bin/puppet apply --modulepath=/vagrant/modules /vagrant/manifests/default.pp"
+    config.vm.provision "puppet" do |puppet|
+      puppet.environment_path = "environments"
+      puppet.environment = "production"
+    end
   end
 
   config.vm.synced_folder ".", "/vagrant"
