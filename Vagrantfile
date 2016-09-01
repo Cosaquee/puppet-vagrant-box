@@ -23,10 +23,13 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--name", "slave2"]
     end
 
-    slave2.vm.provision :shell, inline: "wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb && apt update && apt install puppet-agent"
-    config.vm.provision "puppet" do |puppet|
+    # slave2.vm.provision :shell, inline: "wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb && apt update && apt install puppet-agent"
+    slave2.vm.provision :shell, inline: "puppet module install puppet-nodejs"
+    slave2.vm.provision "puppet" do |puppet|
       puppet.environment_path = "environments"
       puppet.environment = "production"
+      puppet.module_path = "modules"
+      puppet.options = "--verbose --debug"
     end
   end
 

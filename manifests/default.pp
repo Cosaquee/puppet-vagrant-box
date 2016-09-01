@@ -1,3 +1,0 @@
-package { 'emacs':
-  ensure => installed,
-}
