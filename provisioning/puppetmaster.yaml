@@ -1,0 +1,13 @@
+---
+- name: install and configure puppetserver
+  hosts: all
+
+  roles:
+    - puppetmaster
+
+
+# - lineinfile:
+#   - path: /etc/hosts
+#    - regexp: 127.0.0.1\s+puppet
+#    - line: "127.0.0.1     puppet"
+

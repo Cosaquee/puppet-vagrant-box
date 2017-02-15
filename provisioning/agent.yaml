@@ -1,0 +1,6 @@
+---
+- name: install and configure puppetserver
+  hosts: all
+
+  roles:
+    - puppetagent

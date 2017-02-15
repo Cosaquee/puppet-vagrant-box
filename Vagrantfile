@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
 
   config.vm.define "puppetmaster" do |puppetmaster|
-    puppetmaster.vm.box = "ubuntu/xenial64"
+    puppetmaster.vm.box = "debian/jessie64"
     puppetmaster.vm.hostname = 'puppetmaster'
     puppetmaster.vm.network "private_network", ip: "192.168.50.2"
 
@@ -12,10 +12,16 @@ Vagrant.configure("2") do |config|
 
     puppetmaster.vm.provision :shell, path: "scripts/puppetmaster.sh"
     puppetmaster.vm.provision :shell, path: "scripts/modules.sh"
+
+    puppetmaster.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/playbook.yaml"
+      ansible.verbose = true
+    end
+
   end
 
   config.vm.define "slave" do |slave|
-    slave.vm.box = "ubuntu/xenial64"
+    slave.vm.box = "debian/jessie64"
     slave.vm.hostname = 'slave'
     slave.vm.network "private_network", ip: "192.168.50.3"
 
@@ -26,11 +32,16 @@ Vagrant.configure("2") do |config|
 
     slave.vm.provision :shell, path: "scripts/puppetagent.sh"
 
+    slave.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/agent.yaml"
+      ansible.verbose = true
+    end
+
     slave.vm.provision "puppet" do |puppet|
       puppet.environment_path = "environments"
       puppet.environment = "production"
       puppet.module_path = "modules"
-      puppet.options = "--verbose --debug" # if you want to see detailed output from Puppet provision uncomment this lin
+      puppet.options = "--verbose --debug" # if you want to see detailed output from Puppet provision uncomment this line
     end
   end
 

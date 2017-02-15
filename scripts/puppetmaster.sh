@@ -5,5 +5,6 @@ command_exists () {
 if command_exists puppet ; then
   echo "Puppetmaster already installed"
 else
-  wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb && dpkg -i puppetlabs-release-pc1-xenial.deb && apt update && apt-get install -y puppetserver
+    apt install wget
+    wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && dpkg -i puppetlabs-release-trusty.deb && apt update && apt-get install -y puppetmaster
 fi
