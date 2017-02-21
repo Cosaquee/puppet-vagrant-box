@@ -15,7 +15,6 @@ Vagrant.configure("2") do |config|
 
     puppetmaster.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/playbook.yaml"
-      ansible.verbose = true
     end
 
   end
@@ -37,12 +36,12 @@ Vagrant.configure("2") do |config|
       ansible.verbose = true
     end
 
-    slave.vm.provision "puppet" do |puppet|
-      puppet.environment_path = "environments"
-      puppet.environment = "production"
-      puppet.module_path = "modules"
-      puppet.options = "--verbose --debug" # if you want to see detailed output from Puppet provision uncomment this line
-    end
+    #slave.vm.provision "puppet" do |puppet|
+     # puppet.environment_path = "environments"
+     # puppet.environment = "production"
+     # puppet.module_path = "modules"
+     # puppet.options = "--verbose --debug" # if you want to see detailed output from Puppet provision uncomment this line
+    #end
   end
 
   # On every machine you will have your directory where is Vagrantfile available under /vagrant on quest machine

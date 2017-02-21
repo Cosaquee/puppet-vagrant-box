@@ -10,6 +10,11 @@
 
 - name: Install vim
   apt: name=vim state=installed
+  sudo: true
+
+- name: Copy puppet.conf file
+  copy: src=puppet.conf dest=/etc/puppet/puppet.conf
+  sudo: true
 
 - name: Copy hiera config to puppet
   copy: src=hiera.yaml dest=/etc/puppet/hiera.yaml
